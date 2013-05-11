@@ -49,7 +49,7 @@ The steps are:
  - Create a new Arduino sketch (start the GUI, type something in the sketch,
    save the sketch and make note of the sketch directory, exit the GUI)
  - Symlink (or copy if your OS does not support symlinks) active_command.h,
-   debug_main.*, error.*, fuelgauge.*, globals_main.h, magnitude.h, main.cpp,
+   debug_main.h, error.*, fuelgauge.*, globals_main.h, magnitude.h, main.cpp,
    menu.h, parse.*, rhythm.h, vibration.h, and wire_err.h from this directory
    into the new sketch directory (the one that contains the .pde file that
    was created by Arduino)
