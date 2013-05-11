@@ -1,0 +1,1 @@
+avr-gcc -mmcu=attiny88 -O2 -Wall "$@" pwm.c timer.c twi.c parse.c learn_tiny.c tiny.c led.c && ./dump a.out hex && ./avrdude -eUf:w:hex

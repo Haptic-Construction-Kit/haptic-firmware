@@ -1,0 +1,1 @@
+mkdir doc && { doxygen; doxygen Doxyfile.tiny; }
