@@ -20,7 +20,7 @@
 #include "wire_err.h"
 #include "globals_main.h"
 #include "menu.h"
-#include "fuelgauge.h"
+//#include "fuelgauge.h"
 
 #include "debug_main.h"
 
@@ -470,22 +470,22 @@ error_t query_version( int argc, const char *const *argv )
 }
 
 /// Handle the QRY BAT command. Prints percent battery remaining, in decimal.
-error_t query_battery( int argc, const char *const *argv )
-{
-	int32_t bat;
+// error_t query_battery( int argc, const char *const *argv )
+// {
+// 	int32_t bat;
 
-	if( argc ) return EARG;
-	if( !glbl.fuel_gauge ) return EMISSING;
+// 	if( argc ) return EARG;
+// 	if( !glbl.fuel_gauge ) return EMISSING;
 
-	bat = fg_get( FGR_RARC );
-	if( FGG_STATUS(bat) != ESUCCESS )
-		return FGG_STATUS( bat );
+// 	bat = fg_get( FGR_RARC );
+// 	if( FGG_STATUS(bat) != ESUCCESS )
+// 		return FGG_STATUS( bat );
 
-	Serial.print( "RSP BAT " );
-	Serial.println( bat, DEC );
+// 	Serial.print( "RSP BAT " );
+// 	Serial.println( bat, DEC );
 
-	return ESUCCESS;
-}
+// 	return ESUCCESS;
+// }
 
 /// Handle the QRY ALL command. Issues QRY VER,MTR,RHY,MAG,BAT.
 error_t query_all( int argc, const char *const *argv )
@@ -496,7 +496,7 @@ error_t query_all( int argc, const char *const *argv )
 	query_motors( 0, NULL );
 	query_rhythm( 0, NULL );
 	query_magnitude( 0, NULL );
-	query_battery( 0, NULL );
+//	query_battery( 0, NULL );
 
 	return ESUCCESS;
 }
@@ -545,7 +545,7 @@ static PROGMEM const parse_step_t pt_query[] = {
 	{ "SPT", NULL, query_spatio },
 	{ "MTR", NULL, query_motors },
 	{ "VER", NULL, query_version },
-	{ "BAT", NULL, query_battery },
+//	{ "BAT", NULL, query_battery },
 	{ "ALL", NULL, query_all },
 	{ "", NULL, NULL }
 };
@@ -716,7 +716,7 @@ error_t menu_qry_rhy( void ) { return query_rhythm(0, NULL); }
 /// Issue the QRY MAG command from the debug menu
 error_t menu_qry_mag( void ) { return query_magnitude(0, NULL); }
 /// Issue the QRY BAT command from the debug menu
-error_t menu_qry_bat( void ) { return query_battery(0, NULL); }
+//error_t menu_qry_bat( void ) { return query_battery(0, NULL); }
 /// Issue the QRY ALL command from the debug menu
 error_t menu_qry_all( void ) { return query_all(0, NULL); }
 
@@ -954,7 +954,7 @@ void setup( void )
 
 	// set up the fuel gauge before probing for motors, so that it can be
 	// moved off of the factory address and out of the motor address space
-	glbl.fuel_gauge = fg_init( 0x7f ) == ESUCCESS;
+//	glbl.fuel_gauge = fg_init( 0x7f ) == ESUCCESS;
 //	DBGN( fg_get(FGR_TEMP), HEX );
 
 	detect_motors();	// determine which motors are present on bus
