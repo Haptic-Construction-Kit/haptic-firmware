@@ -51,7 +51,7 @@
 globals_t glbl;
 
 /// Print a string from program space over the serial link
-void print_flash( const prog_char* );
+void print_flash( const char* );
 
 /// Read a chunk of data from the EEPROM
 // only because arduino is broken and the avr-libc eeprom_*() don't work
@@ -1024,7 +1024,7 @@ unsigned long mswrap() { return millis(); }
  *haptic belt research project, Arizona State University.
  *
  */
-void print_flash(const prog_char *str)
+void print_flash(const char *str)
 { 
 	char c;
 	if(!str) return;

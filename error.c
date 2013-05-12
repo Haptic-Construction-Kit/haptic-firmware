@@ -57,7 +57,7 @@ static STR emax[] = "Unknown error";
  *  directly in the table, they would be stored in memory and completely
  *  exhaust the available RAM.
  */
-static STR *error_names[] = {
+static STR *const error_names[] = {
 	esuccess,
 	ebadcmd,
 	etoobig,
