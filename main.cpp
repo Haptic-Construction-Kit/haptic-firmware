@@ -645,8 +645,8 @@ static PROGMEM const char menu_str_qry[] =
 	"2. Query number of motors present\n\r"
 	"3. Query defined rhythms\n\r"
 	"4. Query defined magnitudes\n\r"
-	"5. Query remaining battery\n\r"
-	"6. Query all belt information\n\r"
+//	"5. Query remaining battery\n\r"
+	"5. Query all belt information\n\r"
 ;
 
 /// Learn menu options.
@@ -820,7 +820,7 @@ static PROGMEM const menu_step_t menu_choices_qry[] = {
 	{ NULL, NULL, menu_qry_mtr },
 	{ NULL, NULL, menu_qry_rhy },
 	{ NULL, NULL, menu_qry_mag },
-	{ NULL, NULL, menu_qry_bat },
+//	{ NULL, NULL, menu_qry_bat },
 	{ NULL, NULL, menu_qry_all },
 	{ NULL, NULL, menu_end }
 };
