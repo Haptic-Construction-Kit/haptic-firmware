@@ -133,8 +133,8 @@ error_t fg_func( fg_func_t func )
 	}
 
 	Wire.beginTransmission( fg_addr );
-	Wire.send( (uint8_t)FGR_FUNC );
-	Wire.send( (uint8_t)func );
+	Wire.write( (uint8_t)FGR_FUNC );
+	Wire.write( (uint8_t)func );
 	status = Wire.endTransmission();
 
 	return wire_status( status );
@@ -171,7 +171,7 @@ error_t fg_get_multi( uint8_t addr, void *buf, uint8_t size )
 	uint8_t *into = (uint8_t*)buf;
 
 	Wire.beginTransmission( fg_addr );
-	Wire.send( addr );
+	Wire.write( addr );
 	status = wire_status( Wire.endTransmission() );
 	if( status != ESUCCESS )
 		return status;
@@ -183,7 +183,7 @@ error_t fg_get_multi( uint8_t addr, void *buf, uint8_t size )
 			// FIXME: this is probably wrong. need to consult
 			// Wire documentation for requestFrom() and receive().
 			while( size-- > 0 )
-				*into++ = Wire.receive();
+				*into++ = Wire.read();
 
 			return ESUCCESS;
 		}
@@ -314,9 +314,9 @@ error_t fg_set_multi( uint8_t addr, void *buf, uint8_t size )
 	uint8_t *from = (uint8_t*)buf;
 
 	Wire.beginTransmission( fg_addr );
-	Wire.send( addr );
+	Wire.write( addr );
 	while( size-- > 0 )
-		Wire.send( *from++ );
+		Wire.write( *from++ );
 
 	return wire_status( Wire.endTransmission() );
 }

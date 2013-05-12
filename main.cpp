@@ -112,9 +112,9 @@ error_t send_command( int8_t motor )
 	// choose which buffer to send based on the current belt mode
 	Wire.beginTransmission( motor );
 	if( glbl.mode == M_ACTIVE )
-		Wire.send( *((uint8_t*)&glbl.acmd.v) );
+		Wire.write( *((uint8_t*)&glbl.acmd.v) );
 	else	// learning mode
-		Wire.send( glbl.cmd );
+		Wire.write( glbl.cmd );
 	status = Wire.endTransmission();
 
 	// if the TWI transmission failed, return a specific bus error status
@@ -132,7 +132,7 @@ error_t send_command( int8_t motor )
 	// wait for at most TWI_TIMEOUT milliseconds
 	for( start=millis(); millis()-start < TWI_TIMEOUT; )
 		if( Wire.requestFrom((uint8_t)motor, (uint8_t)1) )
-			return (error_t)Wire.receive();
+			return (error_t)Wire.read();
 
 	return EBUS;
 }
@@ -171,7 +171,7 @@ uint8_t detect_motors( void )
 
 		DBGC( i, HEX );
 		Wire.beginTransmission(i);
-		Wire.send(0);
+		Wire.write(0);
 		ret = (wire_err_t)Wire.endTransmission();
 
 		if( ret != WE_ANACK ) {
@@ -932,6 +932,10 @@ void handle_menu( void )
 /// Top-level firmware initialization function
 void setup( void )
 {
+        //on led
+        pinMode(13,OUTPUT);
+        digitalWrite(13,HIGH);
+        
 	unsigned long start;
 
 	Wire.begin();
@@ -976,12 +980,12 @@ void loop( void )
 			// raw command mode; read the command as ASCII hex
 			// and print human-readable status response
 			read_active_hex();
-			Serial.print( ' ', BYTE );
+			Serial.write( ' ' );
 			print_flash( errstr(parse_active()) );
 		}else {
 			// normal mode; read and reply machine-format bytes
 			read_active();
-			Serial.print( parse_active(), BYTE );
+			Serial.write( parse_active() );
 		}
 	}else {
 		uint8_t count = 0;
@@ -1024,6 +1028,6 @@ void print_flash(const prog_char *str)
 { 
 	char c;
 	if(!str) return;
-	while((c = pgm_read_byte(str++))) Serial.print(c,BYTE);
+	while((c = pgm_read_byte(str++))) Serial.write(c);
 	Serial.println();
 }
