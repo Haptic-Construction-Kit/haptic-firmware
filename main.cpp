@@ -4,6 +4,8 @@
  * \author Jon Lindsay (Jonathan.Lindsay@asu.edu)
  * \date   20090510 - initial version
  ****************************************************************************/
+//added for Atmel Studio support, Arduino will bring this in and duplicate, but should be ok
+#include "Arduino.h"
 
 #include <Wire.h>
 #include <EEPROM.h>
