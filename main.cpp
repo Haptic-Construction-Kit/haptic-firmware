@@ -117,10 +117,11 @@ error_t send_command( int8_t motor )
 		Wire.write( *((uint8_t*)&glbl.acmd.v) );
 	else	// learning mode
 		Wire.write( glbl.cmd );
-	status = Wire.endTransmission();
+	status = Wire.endTransmission( false ); //repeated start
 
 	// if the TWI transmission failed, return a specific bus error status
 	if( status ) {
+		Wire.endTransmission( true );//we're done here
 		if( status >= 4 )
 			return EBUS;
 		else	return (error_t)(EBUS + status);
@@ -128,12 +129,15 @@ error_t send_command( int8_t motor )
 
 	// must not try to request data with a general call...
 	// FIXME? anything else to do?
-	if( motor == 0 ) return ESUCCESS;
+	if( motor == 0 ){
+		Wire.endTransmission( true );//we're done here
+		return ESUCCESS;
+	}		 
 
 	// without a delay the tiny misses the status request...
 	// wait for at most TWI_TIMEOUT milliseconds
-	for( start=millis(); millis()-start < TWI_TIMEOUT; )
-		if( Wire.requestFrom((uint8_t)motor, (uint8_t)1) )
+	//for( start=millis(); millis()-start < TWI_TIMEOUT; )
+		if( Wire.requestFrom((uint8_t)motor, (uint8_t)1, true))//we're done here
 			return (error_t)Wire.read();
 
 	return EBUS;
