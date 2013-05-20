@@ -12,6 +12,7 @@
 #include"rhythm.h"
 #include"magnitude.h"
 #include"learn_tiny.h"
+#include"twi.h"
 
 //#include"debug.h"
 
@@ -29,10 +30,13 @@ static error_t learn_magnitude( int argc, const char *const *argv )
 	return parse_magnitude( argc, argv, glbl.magnitudes+ltoi(0) );
 }
 
-/// Not implemented.
+/// LRN ADD \<ADDRESS>; Takes effect on next power cycle
 static error_t learn_address( int argc, const char *const *argv )
 {
-	return EMISSING;
+	if( argc != 1 ) 
+		return EARG;
+	else 
+		return set_twi_address( atoi( argv[0] ) );
 }
 
 /// Returns version of the module
