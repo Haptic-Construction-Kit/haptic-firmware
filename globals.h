@@ -11,8 +11,16 @@
 #include"rhythm.h"
 #include"magnitude.h"
 
+/// Expected version of the motor modules
+#define TINY_VER 0
+
+#define OUT_MAX_LEN 2		///<Maximum length of outbound buffer
+
 /// Globals used on the ATtiny (motor module firmware)
 typedef struct {
+	
+	volatile char bufOut[ OUT_MAX_LEN ];
+	
 	/// Table of all known rhythms
 	rhythm_t rhythms[ MAX_RHYTHM ];
 	/// Table of all known magnitudes

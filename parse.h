@@ -22,7 +22,6 @@ extern "C" {
 
 #define PARSE_MAX_WORDS 10	///<Maximum number of words in each command
 #define PARSE_MAX_LEN 32	///<Maximum length of a single command
-#define OUT_MAX_LEN 1		///<Maximum length of outbound buffer
 
 /// Convert an ASCII ID letter from the given argument number to an index
 #define ltoi( _argnum_ ) ((uint8_t)(*argv[_argnum_] - 'A'))

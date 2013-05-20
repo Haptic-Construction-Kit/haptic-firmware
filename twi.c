@@ -13,6 +13,7 @@
 #include"twi.h"
 #include"error.h"
 #include"led.h"
+#include"globals.h"
 
 //#include"debug.h"
 
@@ -33,9 +34,7 @@ ISR( TWI_vect )
 	static char buf[ PARSE_MAX_LEN ];
 	static error_t status = ESUCCESS;
 	static int ind = 0;
-	
 	static int outInd = 0;
-	static char bufOut[ OUT_MAX_LEN ];
 	
 	switch( TW_STATUS ) {
 	case TW_BUS_ERROR:
@@ -63,24 +62,22 @@ ISR( TWI_vect )
 		else {
 			buf[ ind ] = '\0';
 			status = twi_callback( buf, ind );
-			bufOut[ 0 ] = (int)status;
 		}
 		break;
 	case TW_ST_SLA_ACK: ///SLA+R received, ACK returned
-		TWDR = bufOut[ outInd ];
-		// clear TWEA because this is the last (only) byte to send
-		// mask out TWINT too because setting it would clear int flag
-		TWCR &= ~( _BV(TWEA) | _BV(TWINT) );
+		TWDR = status;
 		break;
 	case TW_ST_DATA_ACK: //data transmitted, ACK received
-		//increment pointer or wrap around
-		if(outInd < OUT_MAX_LEN - 1)
-			outInd++;
-		else outInd=0;
+		//increment pointer or wrap around, 
+		//if you asked for more bytes than your command, its your fault
+		//optionally we can keep track of how many bytes we have to send and use TWEA
+		if(outInd > OUT_MAX_LEN - 1)
+			outInd=0;
+		TWDR = glbl.bufOut[ outInd++ ];
 		break;
-	case TW_ST_DATA_NACK: ///data transmitted, NACK received //because arduino is broken?
+	case TW_ST_DATA_NACK: ///data transmitted, NACK received //arduino transmits nack on last byte..pg151?
 	case TW_ST_LAST_DATA:  //last data byte transmitted, ACK received
-		//reset outbound pointer
+		//reset outbound pointer - does this get hit?
 		outInd=0;
 		// set TWEA again to respond when addressed
 		TWCR = (TWCR & ~_BV( TWINT )) | _BV( TWEA );

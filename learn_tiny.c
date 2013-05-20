@@ -35,16 +35,24 @@ static error_t learn_address( int argc, const char *const *argv )
 	return EMISSING;
 }
 
-/// Not implemented.
+/// Returns version of the module
 static error_t query_version( int argc, const char *const *argv )
 {
-	return EMISSING;
+	if(OUT_MAX_LEN>0){
+		glbl.bufOut [ 0 ] = TINY_VER;
+		return ESUCCESS;
+	}
+	return EARG;
 }
 
-/// Not implemented.
+/// returns i2c address of the module
 static error_t query_address( int argc, const char *const *argv )
 {
-	return EMISSING;
+	if(OUT_MAX_LEN>0){
+		glbl.bufOut[ 0 ] = TWAR >> 1;
+		return ESUCCESS;
+	}
+	return EARG;		
 }
 
 /// Not implemented.
