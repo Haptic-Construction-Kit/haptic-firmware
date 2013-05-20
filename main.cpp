@@ -507,6 +507,12 @@ error_t query_all( int argc, const char *const *argv )
 	return ESUCCESS;
 }
 
+/// Handle the QRY ALL command. Issues QRY VER,MTR,RHY,MAG,BAT.
+error_t query_test( int argc, const char *const *argv )
+{
+	return ESUCCESS;
+}
+
 /// TST command, tries rhythm/magnitude without learning. Not implemented.
 error_t test( int argc, const char *const *argv )
 { return EMISSING; }
@@ -553,6 +559,7 @@ static PROGMEM const parse_step_t pt_query[] = {
 	{ "VER", NULL, query_version },
 //	{ "BAT", NULL, query_battery },
 	{ "ALL", NULL, query_all },
+	{ "ALL", NULL, query_test },
 	{ "", NULL, NULL }
 };
 
@@ -653,6 +660,7 @@ static PROGMEM const char menu_str_qry[] =
 	"4. Query defined magnitudes\n\r"
 //	"5. Query remaining battery\n\r"
 	"5. Query all belt information\n\r"
+	"6. Test Function\n\r"
 ;
 
 /// Learn menu options.
@@ -726,6 +734,8 @@ error_t menu_qry_mag( void ) { return query_magnitude(0, NULL); }
 /// Issue the QRY ALL command from the debug menu
 error_t menu_qry_all( void ) { return query_all(0, NULL); }
 
+error_t menu_qry_test( void ) { return query_test(0, NULL); }
+	
 /// Common work shared by menu_lrn_rhy() / menu_lrn_mag()
 void menu_lrn_generic( const char *prepend )
 {
@@ -828,6 +838,7 @@ static PROGMEM const menu_step_t menu_choices_qry[] = {
 	{ NULL, NULL, menu_qry_mag },
 //	{ NULL, NULL, menu_qry_bat },
 	{ NULL, NULL, menu_qry_all },
+	{ NULL, NULL, menu_qry_test },
 	{ NULL, NULL, menu_end }
 };
 
