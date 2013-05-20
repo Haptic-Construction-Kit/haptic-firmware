@@ -10,6 +10,8 @@
 #define TWI_H
 
 #include<util/twi.h>
+#include"error.h"
+
 #ifdef __AVR_ATtiny48__
 #	undef TW_STATUS_MASK
 /// Fix a broken avr-libc header
@@ -21,12 +23,13 @@
 #	define TW_STATUS_MASK 0xf8
 #endif
 
-#include"error.h"
+#define DEFAULT_TWI_ADDRESS 34
 
 /// Timer function callback type
 typedef error_t (*twi_func_t)( char *data, int len );
 
 void twi_init( void );		///<Set up the TWI module for slave operation
 void twi_func( twi_func_t );	///<Set function to call when data arrives
+error_t set_twi_address(uint8_t ); ///<Set function for TWI address
 
 #endif

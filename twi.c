@@ -14,8 +14,11 @@
 #include"error.h"
 #include"led.h"
 #include"globals.h"
+#include <avr/eeprom.h> 
 
 //#include"debug.h"
+
+uint8_t EEMEM TWI_ADDRESS;
 
 /// Input port mask for the TWI slave address switchbank
 #define TWI_ADDR_MASK ( _BV(PORTD5) | _BV(PORTD4) | _BV(PORTD3) | \
@@ -92,6 +95,23 @@ ISR( TWI_vect )
 	TWCR |= _BV( TWINT );
 }
 
+error_t check_twi_address(uint8_t twi_address){
+	if( twi_address > 7 && twi_address < 120 )
+	return ESUCCESS;
+	else
+	return EARG;
+	}
+
+error_t set_twi_address(uint8_t twi_address){
+	error_t status = check_twi_address( twi_address );
+	
+	if( status == ESUCCESS ){
+		eeprom_busy_wait();
+		eeprom_update_byte( &TWI_ADDRESS, twi_address );
+	}
+	return status;
+}
+
 void twi_init( void )
 {
 	// enable the TWI clock
@@ -107,12 +127,14 @@ void twi_init( void )
 	PORTC |= _BV( PORTC4 ) | _BV( PORTC5 );
 	DDRC &= ~( _BV(DDC4) | _BV(DDC5) );
 
-	// set slave address to 0x22 and enable the general call
-	TWAR = (0x22 << 1) | _BV( TWGCE );
-
-	// set slave address from switch bank and enable the general call
-//	TWAR = ( (~PIND & TWI_ADDR_MASK) << 1 ) | _BV( TWGCE );
-
+	//if eeprom has address, use it, otherwise set slave address to default -- enable the general call
+	eeprom_busy_wait();
+	uint8_t address = eeprom_read_byte(&TWI_ADDRESS);
+	if( check_twi_address(address) == ESUCCESS )
+		TWAR = (address << 1) | _BV( TWGCE );
+	else
+		TWAR = (DEFAULT_TWI_ADDRESS << 1) | _BV( TWGCE );
+		
 	// configure the TWI module
 	TWCR =	_BV( TWEA ) |	// ack when addressed or data received
 		_BV( TWEN ) |	// enable TWI
