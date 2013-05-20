@@ -111,10 +111,10 @@ void twi_init( void )
 	DDRC &= ~( _BV(DDC4) | _BV(DDC5) );
 
 	// set slave address to 0x22 and enable the general call
-//	TWAR = (0x22 << 1) | _BV( TWGCE );
+	TWAR = (0x22 << 1) | _BV( TWGCE );
 
 	// set slave address from switch bank and enable the general call
-	TWAR = ( (~PIND & TWI_ADDR_MASK) << 1 ) | _BV( TWGCE );
+//	TWAR = ( (~PIND & TWI_ADDR_MASK) << 1 ) | _BV( TWGCE );
 
 	// configure the TWI module
 	TWCR =	_BV( TWEA ) |	// ack when addressed or data received
