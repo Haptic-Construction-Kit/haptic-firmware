@@ -33,22 +33,25 @@ ISR( TWI_vect )
 	static char buf[ PARSE_MAX_LEN ];
 	static error_t status = ESUCCESS;
 	static int ind = 0;
-
+	
+	static int outInd = 0;
+	static char bufOut[ OUT_MAX_LEN ];
+	
 	switch( TW_STATUS ) {
 	case TW_BUS_ERROR:
 		TWCR |= _BV( TWSTO );
 		twi_error();
 		break;	// FIXME: error led
-	case TW_SR_SLA_ACK:
+	case TW_SR_SLA_ACK: //SLA+W received, ACK returned
 	case TW_SR_GCALL_ACK:	// FIXME? do something different for GCALL?
 		ind = 0;
 		break;
-	case TW_SR_DATA_ACK:
+	case TW_SR_DATA_ACK: //data received, ACK returned
 	case TW_SR_GCALL_DATA_ACK: // FIXME? something different for GCALL?
 		if( ind < sizeof(buf) )
 			buf[ ind++ ] = TWDR;
 		break;
-	case TW_SR_STOP:
+	case TW_SR_STOP: //stop or repeated start condition received while selected
 		// arduino Wire library doesn't allow repeated start...
 		// still okay to let the funnel release the bus before sending
 		// a new start for the response, because it is the only master
@@ -60,21 +63,25 @@ ISR( TWI_vect )
 		else {
 			buf[ ind ] = '\0';
 			status = twi_callback( buf, ind );
+			bufOut[ 0 ] = (int)status;
 		}
 		break;
-	case TW_ST_SLA_ACK:
-		TWDR = status;
+	case TW_ST_SLA_ACK: ///SLA+R received, ACK returned
+		TWDR = bufOut[ outInd ];
 		// clear TWEA because this is the last (only) byte to send
 		// mask out TWINT too because setting it would clear int flag
 		TWCR &= ~( _BV(TWEA) | _BV(TWINT) );
 		break;
-		/*
-	case TW_ST_DATA_ACK:
-		// FIXME: error led? (only one byte transmitted)
+	case TW_ST_DATA_ACK: //data transmitted, ACK received
+		//increment pointer or wrap around
+		if(outInd < OUT_MAX_LEN - 1)
+			outInd++;
+		else outInd=0;
 		break;
-		*/
-	case TW_ST_DATA_NACK:
-	case TW_ST_LAST_DATA:	// only because arduino is broken
+	case TW_ST_DATA_NACK: ///data transmitted, NACK received //because arduino is broken?
+	case TW_ST_LAST_DATA:  //last data byte transmitted, ACK received
+		//reset outbound pointer
+		outInd=0;
 		// set TWEA again to respond when addressed
 		TWCR = (TWCR & ~_BV( TWINT )) | _BV( TWEA );
 		break;
