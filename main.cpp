@@ -94,7 +94,7 @@ void itoh( char *into, uint8_t val )
 
 /// Send the command in the global command buffer to the specified motor
 // if motor is specified as -1, send command to all motors via a general call
-error_t send_command( int8_t motor )
+error_t send_command( int8_t motor, uint8_t *buf = NULL, int8_t length = 0 )
 {
 	unsigned long start;
 	uint8_t status;
@@ -137,10 +137,12 @@ error_t send_command( int8_t motor )
 	// without a delay the tiny misses the status request...
 	// wait for at most TWI_TIMEOUT milliseconds
 	//for( start=millis(); millis()-start < TWI_TIMEOUT; )
-		if( Wire.requestFrom((uint8_t)motor, (uint8_t)1, true))//we're done here
-			return (error_t)Wire.read();
+	int numberReturned = Wire.requestFrom((uint8_t)motor, (uint8_t)length+1, true);//we're done here
+	status = (error_t)Wire.read();
+	for(int i=0; i<numberReturned-1; i++)
+		buf[ i ] = Wire.read();
 
-	return EBUS;
+	return ESUCCESS;
 }
 
 /// Send a command to each attached motor in turn
@@ -509,7 +511,7 @@ error_t query_all( int argc, const char *const *argv )
 
 /// Handle the QRY ALL command. Issues QRY VER,MTR,RHY,MAG,BAT.
 error_t query_test( int argc, const char *const *argv )
-{
+{	
 	return ESUCCESS;
 }
 
