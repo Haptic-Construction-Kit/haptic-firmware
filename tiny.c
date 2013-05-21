@@ -7,6 +7,8 @@
 
 #include<string.h>
 #include<avr/interrupt.h>
+#include<avr/power.h>
+#include<avr/sleep.h>
 
 #include"globals.h"
 #include"twi.h"
@@ -123,9 +125,20 @@ int main( void )
 	setup_led();
 	set_led(SLED,1);
 
+	//power down stuff we're not using
+	//we have PRR, but attiny48/88 not listed in the avr docs?
+	//PRR has twi tim0 tim1 spi and adc
+	power_spi_disable();
+	power_adc_disable();
+
 	// from here on out everything happens via interrupts
-	// FIXME: go to sleep since TWI will wake us up
-	while(1);
+	// go to sleep, princess
+	while(1){
+		sleep_enable();//enable sleep
+		sleep_bod_disable();//brown out disable
+		sleep_cpu(); //sleep
+		sleep_disable();//wakeup
+	}	
 
 	return 0;
 }
