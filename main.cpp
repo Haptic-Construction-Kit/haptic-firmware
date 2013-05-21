@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <avr/power.h>
 //#include <avr/eeprom.h>	// arduino apparently breaks this
 
 #include "error.h"
@@ -951,6 +952,15 @@ void handle_menu( void )
 /// Top-level firmware initialization function
 void setup( void )
 {
+	
+	power_adc_enable();
+	power_spi_disable();
+	//power_timer0_disable();//delay, millis and micros
+	power_timer1_disable();
+	//power_timer2_disable();
+	//power_twi_disable(); //using, would have to be clever
+	//power_usart0_disable(); //using, would have to be clever
+		
         //on led
         pinMode(13,OUTPUT);
         digitalWrite(13,HIGH);
