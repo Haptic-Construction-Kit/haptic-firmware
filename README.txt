@@ -10,23 +10,25 @@ BUILDING THE DOCUMENTATION
 
 Install Doxygen and Graphviz, then run the builddoc script in this directory.
 HTML documentation will appear in doc/funnel for the Funnel I/O side and
-doc/tiny for the ATtiny48 side. This is primarily useful to get call graphs
+doc/tiny for the Haptic Tactor side. This is primarily useful to get call graphs
 and caller graphs for all the functions in the code.
 
 BUILDING THE TACTOR CODE
 
+The Tactor is programmed entirely in AVR C Code, including nothing from Arduino.
 Install the AVR toolchain and related tools: avr-gcc, avr-libc, avrdude, and
 so forth. Then take a look at the build, dump, and avrdude scripts in this
 directory to see which commands to use to build the code and program the
-ATtiny48. The AVRISPmkII USB in-system programmer was used during development;
+ATtiny88. The AVRISPmkII USB in-system programmer was used during development;
 the arguments to avrdude (as specified in the avrdude script in this
 directory) may need to be modified if a different programmer is to be used.
 See the avrdude documentation for details.
 
 BUILDING THE HAPTIC CONTROLLER I/O CODE
 
+The Controller side is built to utilize the Arduino codebase. 
 Due to some strange "preprocessing" done by the Arduino GUI, building the code
-for the Funnel I/O is a little more involved than building the Haptic Tactor code.
+for the Controller is a little more involved than building the Haptic Tactor code.
 The steps are:
  - Install the Arduino GUI (www.arduino.cc)--the code is known to work on the
    Arduino 1.0.
