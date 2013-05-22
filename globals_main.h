@@ -13,7 +13,7 @@
 #include"menu.h"
 
 /// Current version of the funnel firmware--must be an ASCII decimal number
-#define FUNNEL_VER "1"
+#define FUNNEL_VER "0"
 
 /// Expected version of the motor modules
 #define TINY_VER 0
@@ -21,7 +21,7 @@
 /** \brief Maximum number of motors the firmware can support.
  *  Careful--increasing this requires a change in the active command format!
  */
-#define MAX_MOTORS 64
+#define MAX_MOTORS 16
 
 /// Possible belt operation modes
 typedef enum {

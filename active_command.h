@@ -16,8 +16,8 @@
  *  where t = type, m = motor, R = rhythm, M = magnitude, d = duration.
  */
 typedef struct {
-	uint8_t motor:6,	///<Motor number, 0-63
-		mode:2;		///<Command type, see acmd_mode_t 0-3
+	uint8_t motor:4,	///<Motor number, 0-15
+		mode:4;		///<Command type, see acmd_mode_t
 	vibration_t v;		///<Rhythm, magnitude, and duration
 } active_command_t;
 
