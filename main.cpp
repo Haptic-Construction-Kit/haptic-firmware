@@ -562,7 +562,7 @@ static PROGMEM const parse_step_t pt_query[] = {
 	{ "VER", NULL, query_version },
 //	{ "BAT", NULL, query_battery },
 	{ "ALL", NULL, query_all },
-	{ "ALL", NULL, query_test },
+	{ "TST", NULL, query_test },
 	{ "", NULL, NULL }
 };
 
