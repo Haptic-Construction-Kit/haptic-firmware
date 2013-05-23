@@ -96,7 +96,7 @@ ISR( TWI_vect )
 }
 
 error_t check_twi_address(uint8_t twi_address){
-	if( twi_address > 7 && twi_address < 120 )
+	if( twi_address > 7 && twi_address < 119 )
 	return ESUCCESS;
 	else
 	return EARG;
