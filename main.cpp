@@ -716,9 +716,12 @@ static PROGMEM const char menu_str_forget[] =
 /// Instructions for the activate motor menu.
 static PROGMEM const char menu_str_act[] =
 	"Enter motor, rhythm, magnitude, and duration, then press ENTER.\n\r"
+	"48 max motors, starts at 1, 2, 3, 4, 5, 6, 7, 8, 9, :, ;, <, =, >, ?, @\n\r"
+	"Motor 17 continues       A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P\n\r"
+	"Motor 33 continues       Q, R, S, T, U, V, W, X, Y, Z, [, \\, ], ^, _, `\n\r"
 	"Press ENTER on a blank line when finished.\n\r"
 	"\n\r"
-	"Example: CED6<ENTER> will activate the third motor for 6 cycles\n\r"
+	"Example: 3ED6<ENTER> will activate the third motor for 6 cycles\n\r"
 	"of rhythm E at magnitude D.\n\r"
 ;
 
@@ -799,7 +802,7 @@ error_t menu_act( void )
 		if( glbl.cmd[0] == '\0' ) break;
 
 		// convert it into a native activate command
-		ARG( glbl.acmd.motor, 'A', MAX_MOTORS );
+		ARG( glbl.acmd.motor, '1', MAX_MOTORS );
 		ARG( glbl.acmd.v.rhythm, 'A', MAX_RHYTHM );
 		ARG( glbl.acmd.v.magnitude, 'A', MAX_MAGNITUDE );
 		ARG( glbl.acmd.v.duration, '0', MAX_DURATION+1 );
