@@ -298,7 +298,7 @@ static inline char read_char( uint8_t echo )
 
 	while( !Serial.available() );
 
-	ch = toupper( Serial.read() );
+	ch =  Serial.read() ;
 	if( echo ) {
 		Serial.print(ch);
 		if( ch == '\r' ) Serial.print( '\n' );
@@ -716,9 +716,10 @@ static PROGMEM const char menu_str_forget[] =
 /// Instructions for the activate motor menu.
 static PROGMEM const char menu_str_act[] =
 	"Enter motor, rhythm, magnitude, and duration, then press ENTER.\n\r"
-	"48 max motors, starts at 1, 2, 3, 4, 5, 6, 7, 8, 9, :, ;, <, =, >, ?, @\n\r"
+	"64 max motors, starts at 1, 2, 3, 4, 5, 6, 7, 8, 9, :, ;, <, =, >, ?, @\n\r"
 	"Motor 17 continues       A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P\n\r"
 	"Motor 33 continues       Q, R, S, T, U, V, W, X, Y, Z, [, \\, ], ^, _, `\n\r"
+	"Motor 49 continues       a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p\n\r"
 	"Press ENTER on a blank line when finished.\n\r"
 	"\n\r"
 	"Example: 3216<ENTER> will activate the third motor for 6 cycles\n\r"
