@@ -688,7 +688,7 @@ static PROGMEM const char menu_str_lrn_rhy[] =
 	"The number of bits argument specifies how many of the 64 bits\n\r"
 	"specified by the pattern are actually used in the rhythm.\n\r"
 	"\n\r"
-	"Example: A F0C1F00000000000 17<ENTER> defines rhythm A to be\n\r"
+	"Example: 1 F0C1F00000000000 17<ENTER> defines rhythm 1 to be\n\r"
 	"17 * 50 ms = 850 ms long: 200 ms ON, 200 ms OFF, 100 ms ON, 250\n\r"
 	"ms OFF, and finally ON for the last 100 ms.\n\r"
 ;
@@ -701,7 +701,7 @@ static PROGMEM const char menu_str_lrn_mag[] =
 	"To specify full ON (digital 1), enter the same number for both\n\r"
 	"period and pulse width.\n\r"
 	"\n\r"
-	"Example: C 2000 500<ENTER> defines magnitude C to have a 2 ms\n\r"
+	"Example: 1 2000 500<ENTER> defines magnitude 1 to have a 2 ms\n\r"
 	"period with 25% duty cycle.\n\r"
 ;
 
@@ -721,8 +721,8 @@ static PROGMEM const char menu_str_act[] =
 	"Motor 33 continues       Q, R, S, T, U, V, W, X, Y, Z, [, \\, ], ^, _, `\n\r"
 	"Press ENTER on a blank line when finished.\n\r"
 	"\n\r"
-	"Example: 3ED6<ENTER> will activate the third motor for 6 cycles\n\r"
-	"of rhythm E at magnitude D.\n\r"
+	"Example: 3216<ENTER> will activate the third motor for 6 cycles\n\r"
+	"of rhythm 2 at magnitude 1.\n\r"
 ;
 
 // menu handlers
@@ -803,8 +803,8 @@ error_t menu_act( void )
 
 		// convert it into a native activate command
 		ARG( glbl.acmd.motor, '1', MAX_MOTORS );
-		ARG( glbl.acmd.v.rhythm, 'A', MAX_RHYTHM );
-		ARG( glbl.acmd.v.magnitude, 'A', MAX_MAGNITUDE );
+		ARG( glbl.acmd.v.rhythm, '1', MAX_RHYTHM );
+		ARG( glbl.acmd.v.magnitude, '1', MAX_MAGNITUDE );
 		ARG( glbl.acmd.v.duration, '0', MAX_DURATION+1 );
 		glbl.acmd.mode = 0;
 

@@ -24,10 +24,10 @@ extern "C" {
 #define PARSE_MAX_LEN 32	///<Maximum length of a single command
 
 /// Convert an ASCII ID letter from the given argument number to an index
-#define ltoi( _argnum_ ) ((uint8_t)(*argv[_argnum_] - 'A'))
+#define ltoi( _argnum_ ) ((uint8_t)(*argv[_argnum_] - '1'))
 
 /// Convert an index to an ASCII ID letter
-#define itol( _id_ ) ('A' + _id_)
+#define itol( _id_ ) ('1' + _id_)
 
 /// Function pointer type for individual command handlers
 typedef error_t (*parse_func_t)( int argc, const char *const *argv );
