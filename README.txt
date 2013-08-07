@@ -23,6 +23,8 @@ ATtiny88. The AVRISPmkII USB in-system programmer was used during development;
 the arguments to avrdude (as specified in the avrdude script in this
 directory) may need to be modified if a different programmer is to be used.
 See the avrdude documentation for details.
+ex:
+./build -DDEFAULT_TWI_ADDRESS=34
 
 BUILDING THE HAPTIC CONTROLLER I/O CODE
 

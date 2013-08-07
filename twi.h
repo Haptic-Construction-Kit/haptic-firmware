@@ -23,8 +23,6 @@
 #	define TW_STATUS_MASK 0xf8
 #endif
 
-#define DEFAULT_TWI_ADDRESS 34
-
 /// Timer function callback type
 typedef error_t (*twi_func_t)( char *data, int len );
 
