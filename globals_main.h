@@ -21,7 +21,7 @@
 /** \brief Maximum number of motors the firmware can support.
  *  Careful--increasing this requires a change in the active command format!
  */
-#define MAX_MOTORS 48
+#define MAX_MOTORS 64
 
 /// Possible belt operation modes
 typedef enum {
