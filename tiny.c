@@ -123,7 +123,7 @@ int main( void )
 	sei();
 	
 	setup_led();
-	set_led(SLED,1);
+	//set_led(SLED,1);
 
 	//power down stuff we're not using
 	//we have PRR, but attiny48/88 not listed in the avr docs?
