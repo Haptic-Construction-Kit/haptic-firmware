@@ -138,7 +138,7 @@ error_t send_command( int8_t motor, uint8_t *buf = NULL, int8_t length = 0 )
 	// without a delay the tiny misses the status request...
 	// wait for at most TWI_TIMEOUT milliseconds
 	//for( start=millis(); millis()-start < TWI_TIMEOUT; )
-	int numberReturned = Wire.requestFrom((uint8_t)motor, (uint8_t)length+1, true);//we're done here
+	int numberReturned = Wire.requestFrom(motor, length+1, true);//we're done here
 	status = Wire.read();
 	for(int i=0; i<numberReturned-1; i++)
 		buf[ i ] = Wire.read();

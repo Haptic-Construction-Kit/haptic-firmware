@@ -1,1 +1,0 @@
-avrdude -pt88 -cavrispmkII -Pusb -y "$@"
