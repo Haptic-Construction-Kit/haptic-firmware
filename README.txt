@@ -14,11 +14,11 @@ necessary, this does not appear to work as advertised in arduino-0015. To work
 around this, a few C files shared by the ATtiny48 and the Funnel I/O had to be
 #included into main.cpp.
 
-Once uploaded, you can talk to the controller by connecting to it with a terminal program like hypterm, putty, screen, etc. (arduino's built in terminal doesnt send compatible new lines so unfortunately its not usable) 
+Once uploaded, you can talk to the controller by connecting to it with a terminal program like arduino. In the bottom right corner be sure to select 9600 and "Both NL and CR"
 
-Hitting enter several times will bring you out of command mode and to the text debug menu where you can teach the belt new rhthyms and magnitudes, query to see if any motors were found, and do some basic actuation.
+Hitting enter several times will bring you out of command mode and to the text debug menu where you can teach the controller and modules new rhthyms and magnitudes, query to see if any motors were found, and do some basic actuation.
 
-Ideally you'll utilize a driver and host program to communicate with the belt. Find repositories nearby like pyhaptic for python, and Haptic Driver and HaptikosPC for .net
+You can use the conroller like this, but most likely you'll want to script actuations. Find repositories nearby like pyhaptic for python, and Haptic Driver and HaptikosPC for .net
 
 BUILDING THE DOCUMENTATION
 
